@@ -2,7 +2,7 @@
   "name": "learn-width-redwan-server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "main": "src/server.ts",
   "scripts": {
     "generate": "node generateFolder.ts",
     "start": "ts-node-dev --respawn --transpile-only src/server.ts",
@@ -15,8 +15,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
-  "author": "",
+  "author": "Nazmul Hasan",
   "license": "ISC",
+  "lint-staged": {
+    "src/**/*.ts": "npm run lint-prettier"
+  },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
