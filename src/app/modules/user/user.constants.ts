@@ -10,6 +10,5 @@ export const userFilterableFields = [
   'isValid',
   'userStatus',
 ];
-helssa;
 
 export const userSearchableFields = ['email', 'phoneNumber', 'studentId'];

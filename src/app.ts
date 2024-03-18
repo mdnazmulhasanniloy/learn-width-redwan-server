@@ -52,7 +52,7 @@ app.get('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 //test
-app.get('/test', async (req: Request, res: Response, next: NextFunction) => {
+app.get('/test', async (req: Requestt, res: Response, next: NextFunction) => {
   // console.log(x)
   try {
     // const academicSemester: { year: string; code: string } = {
