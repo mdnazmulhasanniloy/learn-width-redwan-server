@@ -10,6 +10,6 @@ export const userFilterableFields = [
   'isValid',
   'userStatus',
 ];
-hello;
+hell;
 
 export const userSearchableFields = ['email', 'phoneNumber', 'studentId'];
