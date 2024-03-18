@@ -24,3 +24,16 @@ export type IApiResponse<T> = {
   meta?: IMeta;
   data?: T | null;
 };
+
+export type IPaginationOption = {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+};
+
+export type IAFilter = {
+  searchTerm?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+};

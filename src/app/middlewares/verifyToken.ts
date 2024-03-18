@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+/*import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import ApiError from '../../errors/api.error';
 import httpStatus from 'http-status';
@@ -18,7 +18,8 @@ export const verifyToken = (
     if (err) {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'invalid token');
     }
-    // req.userId = (decoded as { userId: string }).userId;
+    req.id = (decoded as { id: string }).id;
     next();
   });
 };
+*/
