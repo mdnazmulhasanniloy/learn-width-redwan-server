@@ -19,7 +19,7 @@ const createBatch = CatchAsync(async (req: Request, res: Response) => {
   });
 });
 
-//get all courses
+//get all batch
 const getAllBatch = CatchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, batchFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
@@ -35,7 +35,7 @@ const getAllBatch = CatchAsync(async (req: Request, res: Response) => {
   });
 });
 
-//get course by id
+//get batch by id
 const getBatchById = CatchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const result = await BatchService.getBatchById(id);
@@ -47,7 +47,7 @@ const getBatchById = CatchAsync(async (req: Request, res: Response) => {
   });
 });
 
-//update course
+//update batch
 const updateBatch = CatchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const updatedData = req?.body;
@@ -60,7 +60,7 @@ const updateBatch = CatchAsync(async (req: Request, res: Response) => {
   });
 });
 
-//delete course
+//delete batch
 const deleteBatch = CatchAsync(async (req: Request, res: Response) => {
   const id = req?.params?.id;
   const result = await BatchService.deleteBatch(id);
