@@ -5,12 +5,12 @@ import {
   IGenericResponse,
   IPaginationOption,
 } from '../../../interface/common.interface';
-import { userSearchableFields } from '../user/user.constants';
 import { ICourse } from './course.interface';
 import { Course } from './course.models';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/api.error';
 import { generateCourseId } from './course.utils';
+import { courseSearchableFields } from './course.constants';
 
 const createCourse = async (props: ICourse): Promise<ICourse> => {
   // auto generated incremental id
@@ -36,7 +36,7 @@ const getAllCourses = async (
   const andCondition = [];
   if (searchTerm) {
     andCondition.push({
-      $or: userSearchableFields.map(field => ({
+      $or: courseSearchableFields.map(field => ({
         [field]: {
           $regex: searchTerm,
           $options: 'i',
@@ -107,7 +107,7 @@ const deleteCourse = async (id: string): Promise<ICourse> => {
   const result = await Course.findByIdAndDelete(id);
   if (!result) {
     throw new ApiError(
-      httpStatus.NOT_FOUND,
+      httpStatus.BAD_REQUEST,
       'oops! course deleting is failed.',
     );
   }

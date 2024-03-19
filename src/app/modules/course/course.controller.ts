@@ -29,7 +29,7 @@ const getAllCourses = CatchAsync(async (req: Request, res: Response) => {
   sendResponse<ICourse[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'users get successfully!',
+    message: 'all course get successfully!',
     meta: result?.meta,
     data: result?.data,
   });
