@@ -5,7 +5,7 @@ import ApiError from '../../../errors/api.error';
 import { IBatch } from './batch.interface';
 import { Batch } from './batch.models';
 import {
-  IAFilter,
+  IFilter,
   IGenericResponse,
   IPaginationOption,
 } from '../../../interface/common.interface';
@@ -29,7 +29,7 @@ const createBatch = async (props: IBatch): Promise<IBatch | null> => {
 
 //get all batch
 const getAllBatches = async (
-  filters: IAFilter,
+  filters: IFilter,
   paginationOptions: IPaginationOption,
 ): Promise<IGenericResponse<IBatch[]>> => {
   const { searchTerm, ...filtersData } = filters;

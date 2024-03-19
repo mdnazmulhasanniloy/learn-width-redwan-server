@@ -3,6 +3,7 @@ import { UserRoutes } from '../modules/user/user.route';
 import { AuthRoutes } from '../modules/auth/auth.route';
 import { CourseRouter } from '../modules/course/course.route';
 import { BatchRouter } from '../modules/batch/batch.route';
+import { ModuleRouter } from '../modules/modules/modules.route';
 
 const router = Router();
 
@@ -22,6 +23,10 @@ const modulesRoutes = [
   {
     path: '/batch',
     router: BatchRouter,
+  },
+  {
+    path: '/module',
+    router: ModuleRouter,
   },
   //   {
   //     path: '/academic-semester',

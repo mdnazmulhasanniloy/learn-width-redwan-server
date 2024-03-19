@@ -6,7 +6,7 @@ export const findLastStudentId = async (): Promise<string | undefined> => {
     .sort({ createdAt: -1 })
     .lean();
   return lastStudent?.studentId
-    ? lastStudent?.studentId.substring(4)
+    ? lastStudent?.studentId.substring(5)
     : // eslint-disable-next-line no-undefined
       undefined;
 };
@@ -14,6 +14,7 @@ export const findLastStudentId = async (): Promise<string | undefined> => {
 export const generateStudentId = async (): Promise<string> => {
   const currentId =
     (await findLastStudentId()) || (0).toString().padStart(5, '0');
-  const incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0');
+  let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0');
+  incrementedId = `USER-${incrementedId}`;
   return incrementedId.toString();
 };
