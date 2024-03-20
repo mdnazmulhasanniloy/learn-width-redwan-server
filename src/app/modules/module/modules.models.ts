@@ -12,13 +12,15 @@ const modulesSchema = new Schema<IModules>(
       type: String,
       required: true,
     },
-    courseName: {
-      type: String,
+    courseId: {
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'course',
     },
-    batchName: {
-      type: String,
+    batchId: {
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Batch',
     },
   },
   {
