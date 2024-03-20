@@ -66,6 +66,7 @@ const getAllModules = async (
   const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
   //find collection
   const result = await Module.find(whereCondition)
+    .populate(['courseId', 'batchId'])
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
@@ -83,7 +84,7 @@ const getAllModules = async (
 
 //get a batch by id
 const getModuleById = async (id: string): Promise<IModules | null> => {
-  const result = await Module.findById(id);
+  const result = await Module.findById(id).populate(['courseId', 'batchId']);
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'oops! module is not found.');
   }

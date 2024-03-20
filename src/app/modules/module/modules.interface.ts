@@ -1,10 +1,10 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 export type IModules = {
   id: string;
   moduleName: string;
-  courseName: string;
-  batchName: string;
+  courseId: Types.ObjectId;
+  batchId: Types.ObjectId;
 };
 
 export type ModulesModel = Model<IModules, Record<string, unknown>>;

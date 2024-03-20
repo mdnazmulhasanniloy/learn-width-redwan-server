@@ -51,12 +51,12 @@ const lectureSchema = new Schema<ILecture>(
     },
     batchId: {
       type: Schema.Types.ObjectId,
-      ref: 'batch',
+      ref: 'Batch',
       required: true,
     },
     moduleId: {
       type: Schema.Types.ObjectId,
-      ref: 'module',
+      ref: 'Module',
       required: true,
     },
     courseId: {

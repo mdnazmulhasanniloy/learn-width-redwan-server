@@ -69,6 +69,7 @@ const getAllLectures = async (
   const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
   //find collection
   const result = await Lecture.find(whereCondition)
+    .populate(['courseId', 'moduleId', 'batchId'])
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
@@ -86,7 +87,11 @@ const getAllLectures = async (
 
 //get lecture by id
 const getLectureById = async (id: string): Promise<ILecture> => {
-  const result = await Lecture.findById(id);
+  const result = await Lecture.findById(id).populate([
+    'courseId',
+    'moduleId',
+    'batchId',
+  ]);
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'oops! lecture is not found.');
   }
