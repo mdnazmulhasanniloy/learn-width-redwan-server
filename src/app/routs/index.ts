@@ -3,7 +3,8 @@ import { UserRoutes } from '../modules/user/user.route';
 import { AuthRoutes } from '../modules/auth/auth.route';
 import { CourseRouter } from '../modules/course/course.route';
 import { BatchRouter } from '../modules/batch/batch.route';
-import { ModuleRouter } from '../modules/modules/modules.route';
+import { ModuleRouter } from '../modules/module/modules.route';
+import { LectureRouter } from '../modules/lecture/lecture.route';
 
 const router = Router();
 
@@ -28,21 +29,13 @@ const modulesRoutes = [
     path: '/module',
     router: ModuleRouter,
   },
-  //   {
-  //     path: '/academic-semester',
-  //     router: AcademicSemesterRoutes,
-  //   },
-  //   {
-  //     path: '/academic-faculty',
-  //     router: AcademicFacultyRoutes,
-  //   },
-  //   {
-  //     path: '/academic-department',
-  //     router: AcademicDepartmentRoutes,
-  //   },
+  {
+    path: '/lecture',
+    router: LectureRouter,
+  },
 ];
-//optimize routes
 
+//optimize routes
 modulesRoutes?.forEach(route => router?.use(route?.path, route?.router));
 
 export default router;

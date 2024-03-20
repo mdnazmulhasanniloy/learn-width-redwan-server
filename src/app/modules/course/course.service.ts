@@ -1,7 +1,7 @@
 import { SortOrder } from 'mongoose';
 import { paginationHelper } from '../../../helpers/pagination.helper';
 import {
-  IAFilter,
+  IFilter,
   IGenericResponse,
   IPaginationOption,
 } from '../../../interface/common.interface';
@@ -28,7 +28,7 @@ const createCourse = async (props: ICourse): Promise<ICourse> => {
 //get all course
 
 const getAllCourses = async (
-  filters: IAFilter,
+  filters: IFilter,
   paginationOptions: IPaginationOption,
 ): Promise<IGenericResponse<ICourse[]>> => {
   const { searchTerm, ...filtersData } = filters;

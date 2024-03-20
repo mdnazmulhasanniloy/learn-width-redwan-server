@@ -2,7 +2,7 @@ import { SortOrder } from 'mongoose';
 import ApiError from '../../../errors/api.error';
 import { paginationHelper } from '../../../helpers/pagination.helper';
 import {
-  IAFilter,
+  IFilter,
   IGenericResponse,
   IPaginationOption,
 } from '../../../interface/common.interface';
@@ -28,7 +28,7 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
 
 //get all user
 const getAllUsers = async (
-  filters: IAFilter,
+  filters: IFilter,
   paginationOptions: IPaginationOption,
 ): Promise<IGenericResponse<IUser[]>> => {
   const { searchTerm, ...filtersData } = filters;
