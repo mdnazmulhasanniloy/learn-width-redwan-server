@@ -5,6 +5,7 @@ import { CourseRouter } from '../modules/course/course.route';
 import { BatchRouter } from '../modules/batch/batch.route';
 import { ModuleRouter } from '../modules/module/modules.route';
 import { LectureRouter } from '../modules/lecture/lecture.route';
+import { CouponRouter } from '../modules/coupon/coupon.route';
 
 const router = Router();
 
@@ -32,6 +33,10 @@ const modulesRoutes = [
   {
     path: '/lecture',
     router: LectureRouter,
+  },
+  {
+    path: '/coupon',
+    router: CouponRouter,
   },
 ];
 
