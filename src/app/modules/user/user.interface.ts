@@ -24,7 +24,7 @@ type Experience = {
   currentlyWorking: boolean;
 };
 export type IUser = {
-  studentId: string;
+  studentId?: string;
   name: string;
   email: string;
   password: string;

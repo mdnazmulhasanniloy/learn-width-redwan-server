@@ -5,7 +5,6 @@ export const findLastStudentId = async (): Promise<string | undefined> => {
   const lastStudent = await User.findOne({ role: 'student' })
     .sort({ createdAt: -1 })
     .lean();
-  console.log('last', lastStudent);
   return lastStudent?.studentId
     ? lastStudent?.studentId.substring(5)
     : // eslint-disable-next-line no-undefined
