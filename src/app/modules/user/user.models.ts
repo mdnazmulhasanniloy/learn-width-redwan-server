@@ -9,8 +9,14 @@ const userSchema = new Schema<IUser>(
   {
     studentId: {
       type: String,
-      required: true,
       unique: true,
+      validate: {
+        validator: async function (studentId: string) {
+          const user = await User.findOne({ studentId });
+          return !user;
+        },
+        message: 'student Id must be unique', // Custom error message
+      },
     },
     role: {
       type: String,

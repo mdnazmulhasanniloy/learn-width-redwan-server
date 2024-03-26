@@ -15,9 +15,11 @@ import httpStatus from 'http-status';
 //crete user
 const createUser = async (user: IUser): Promise<IUser | null> => {
   // auto generated incremental id
-  const studentId = await generateStudentId();
+  if (user.role === 'student') {
+    const studentId = await generateStudentId();
+    user.studentId = studentId;
+  }
 
-  user.studentId = studentId;
   const createdUser = await User.create(user);
 
   if (!createdUser) {
