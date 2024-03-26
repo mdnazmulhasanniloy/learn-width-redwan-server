@@ -14,7 +14,7 @@ const initPayment = async (payload: any) => {
     success_url: 'http://localhost:3030/success',
     fail_url: 'http://localhost:3030/fail',
     cancel_url: 'http://localhost:3030/cancel',
-    ipn_url: 'http://localhost:3030/ipn',
+    ipn_url: 'http://localhost:2000/test',
     product_name: 'course payment.',
     product_category: 'payment',
     product_profile: 'student',
