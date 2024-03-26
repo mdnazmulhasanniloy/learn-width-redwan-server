@@ -2,9 +2,10 @@
 import { User } from './user.models';
 
 export const findLastStudentId = async (): Promise<string | undefined> => {
-  const lastStudent = await User.findOne({ role: 'student' }, { id: 1, _id: 0 })
+  const lastStudent = await User.findOne({ role: 'student' })
     .sort({ createdAt: -1 })
     .lean();
+  console.log('last', lastStudent);
   return lastStudent?.studentId
     ? lastStudent?.studentId.substring(5)
     : // eslint-disable-next-line no-undefined
