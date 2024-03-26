@@ -42,6 +42,8 @@ export type IUser = {
   _id?: string;
   accessToken?: string;
   userStatus: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  _doc?: any;
 };
 
 export type UserModel = Model<IUser, Record<string, unknown>>;
