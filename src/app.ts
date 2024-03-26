@@ -36,10 +36,11 @@ app.get('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 //test
-app.get('/test', async (req: Request, res: Response, next: NextFunction) => {
+app.post('/ipn', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = req.body;
-    res.json({ data });
+    // const data = req.body;
+    console.log('Received IPN notification:', req.body);
+    res.status(200);
   } catch (error) {
     next(error);
   }
