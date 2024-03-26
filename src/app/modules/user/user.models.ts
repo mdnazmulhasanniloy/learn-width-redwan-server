@@ -12,7 +12,12 @@ const userSchema = new Schema<IUser>(
       required: true,
       unique: true,
     },
-    role: { type: String, default: 'student', required: true },
+    role: {
+      type: String,
+      enum: ['admin', 'student'],
+      default: 'student',
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -162,4 +167,4 @@ userSchema.pre<IUser>('save', async function (next) {
   }
 });
 
-export const User = model<IUser, UserModel>('User', userSchema);
+export const User = model<IUser, UserModel>('User', userSchema) as UserModel;

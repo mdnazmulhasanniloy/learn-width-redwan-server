@@ -6,6 +6,7 @@ import { BatchRouter } from '../modules/batch/batch.route';
 import { ModuleRouter } from '../modules/module/modules.route';
 import { LectureRouter } from '../modules/lecture/lecture.route';
 import { CouponRouter } from '../modules/coupon/coupon.route';
+import { PaymentRouter } from '../modules/payment/payment.route';
 
 const router = Router();
 
@@ -37,6 +38,10 @@ const modulesRoutes = [
   {
     path: '/coupon',
     router: CouponRouter,
+  },
+  {
+    path: '/payment',
+    router: PaymentRouter,
   },
 ];
 
