@@ -6,17 +6,10 @@ import HandleValidationError from '../errors/handelValidation.error';
 import handleZodError from '../errors/handleZod.error';
 import handleCastError from '../errors/handleCast.error';
 import ApiError from '../errors/api.error';
-// import { errorLogger } from '../shared/logger'
 
 // ErrorHandler.js
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
-  // eslint-disable-next-line no-unused-expressions
-  // config.nod_env === 'development'
-  //   ? console.log('global error handler ~ ', error)
-  //   : errorLogger.error('global error handler ~ ', error)
-  // console.log(error);
-
   let statusCode: number | string = 500;
   let message = 'Something went wrong';
   let errorMessages: IGenericErrorMessage[] = [];
