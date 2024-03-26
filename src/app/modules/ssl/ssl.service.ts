@@ -35,7 +35,6 @@ const initPayment = async (payload: any) => {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
-
   return response.data;
 };
 
@@ -46,7 +45,6 @@ const validate = async (data: any) => {
       method: 'get',
       url: `${config.ssl.url}?val_id=${data.val_id}&store_id=${config.ssl.store_id}&store_passwd=${config.ssl.store_passwd}&format=json`,
     });
-    console.log(data.val_id);
 
     if (!response) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'payment validation failed');
