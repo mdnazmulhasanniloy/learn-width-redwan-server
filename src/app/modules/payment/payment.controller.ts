@@ -17,6 +17,8 @@ const initPayment = CatchAsync(async (req: Request, res: Response) => {
 
 const webhook = CatchAsync(async (req: Request, res: Response) => {
   const result = await PaymentService.webhook(req.query);
+  res.send(result);
+  return;
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
