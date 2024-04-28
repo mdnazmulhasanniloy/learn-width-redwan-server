@@ -3,7 +3,7 @@ import { Session } from 'express-session';
 export type ILoginUser = {
   email: string;
   password: string;
-  deviceIdentifier: string;
+  deviceIdentifier: string | null;
 };
 
 export type IUserSession = {

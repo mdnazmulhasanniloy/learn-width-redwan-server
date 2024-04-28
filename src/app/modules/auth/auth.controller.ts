@@ -1,19 +1,36 @@
 import { Request, Response } from 'express';
 import CatchAsync from '../../../shared/catchAsync';
-import { IUserSession } from './auth.interface';
 import { AuthService } from './auth.service';
 import sendResponse from '../../../shared/sendResponse';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/api.error';
-import { IUser } from '../user/user.interface';
 
+//sign up  user
+
+const signUp = CatchAsync(async (req: Request, res: Response) => {
+  const user = req?.body;
+  const result = await AuthService.signUp(user);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'user created successfully!',
+    data: result,
+  });
+});
+
+//sign in user
 const signIn = CatchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.signIn(req.body);
 
-  (req.session as IUserSession).user = {
-    id: (result as IUser)._id,
-    email: (result as IUser).email,
-  }; // Store user data in session
+  // (req.session as IUserSession).user = {
+  //   id: (result as IUser)._id,
+  //   email: (result as IUser).email,
+  // }; // Store user data in session
+  if (result?.accessToken) {
+    req.cookies('JWT', result.accessToken, { httpOnly: true });
+  }
+  res.json();
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -46,6 +63,7 @@ const signOut = CatchAsync(async (req: Request, res: Response) => {
 });
 
 export const AuthController = {
+  signUp,
   signIn,
   signOut,
 };
