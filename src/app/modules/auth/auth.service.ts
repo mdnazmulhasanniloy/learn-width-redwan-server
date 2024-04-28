@@ -6,6 +6,30 @@ import { IUser } from '../user/user.interface';
 import { ILoginUser } from './auth.interface';
 import jwt from 'jsonwebtoken';
 import config from '../../../config';
+import { generateStudentId } from '../user/user.utils';
+
+//sign up
+const signUp = async (user: IUser): Promise<IUser | null> => {
+  if (!user.role) user.role = 'student';
+
+  if (user.role === 'student') {
+    const studentId = await generateStudentId();
+    user.studentId = studentId;
+  }
+
+  const deviceIdentifier = Math.floor(Math.random() * 1000000);
+  if (deviceIdentifier) user.loggedInDevice = deviceIdentifier.toString();
+
+  const createdUser = await User.create(user);
+
+  if (!createdUser) {
+    throw new ApiError(400, 'Failed to create');
+  }
+  const token = jwt.sign({ userId: user._id }, config?.access_token as string, {
+    expiresIn: '3d',
+  });
+  return { ...createdUser._doc, accessToken: token };
+};
 
 //login user
 const signIn = async (props: ILoginUser): Promise<IUser | null> => {
@@ -30,6 +54,7 @@ const signIn = async (props: ILoginUser): Promise<IUser | null> => {
       'your email or password is incorrect',
     );
   }
+
   if (user.loggedInDevice && user.loggedInDevice !== deviceIdentifier) {
     throw new ApiError(
       httpStatus.UNAUTHORIZED,
@@ -57,6 +82,7 @@ const signOut = async (props: string): Promise<IUser | null> => {
 };
 
 export const AuthService = {
+  signUp,
   signIn,
   signOut,
 };

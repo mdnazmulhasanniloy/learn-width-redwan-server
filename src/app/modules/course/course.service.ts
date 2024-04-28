@@ -32,7 +32,6 @@ const getAllCourses = async (
   paginationOptions: IPaginationOption,
 ): Promise<IGenericResponse<ICourse[]>> => {
   const { searchTerm, ...filtersData } = filters;
-
   const andCondition = [];
   if (searchTerm) {
     andCondition.push({

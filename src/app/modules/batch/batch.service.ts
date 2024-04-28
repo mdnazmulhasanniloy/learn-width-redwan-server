@@ -37,15 +37,31 @@ const getAllBatches = async (
   const andCondition = [];
   if (searchTerm) {
     andCondition.push({
-      $or: batchSearchableFields.map(field => ({
-        [field]: {
-          $regex: searchTerm,
-          $options: 'i',
-        },
-      })),
+      $or: batchSearchableFields
+        .map(field => ({
+          [field]: {
+            $regex: searchTerm,
+            $options: 'i',
+          },
+        }))
+        .filter(item => !('courseId' in item)),
     });
   }
 
+  // const updatedAndCondition = andCondition.map(obj => {
+  //   // Destructure the $or array and filter out the object containing 'startAt'
+  //   const { $or: filteredOr } = obj;
+  //   const updatedOr = filteredOr;
+
+  //   // Create a new object with the filtered $or array
+  //   return { $or: updatedOr };
+  // });
+
+  // if (updatedAndCondition) {
+  //   andCondition.push(...updatedAndCondition);
+  // }
+
+  console.dir(andCondition, { depth: null });
   if (Object.entries(filtersData).length) {
     andCondition.push({
       $and: Object.entries(filtersData)?.map(([field, value]) => ({
@@ -67,10 +83,10 @@ const getAllBatches = async (
   const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
   //find collection
   const result = await Batch.find(whereCondition)
-    .populate('courseId')
     .sort(sortConditions)
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .populate('courseId');
 
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'oops! batch is not found.');
