@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 // import { createLogger, format, transports } from 'winston';
 // import config from '../config';
 // import path from 'path';
