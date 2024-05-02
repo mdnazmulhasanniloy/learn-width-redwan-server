@@ -119,7 +119,6 @@ const updateBatch = async (
   }
   return result;
 };
-
 //delete a batch
 const deleteBatch = async (id: string): Promise<IBatch | null> => {
   const result = await Batch.findByIdAndDelete(id);
