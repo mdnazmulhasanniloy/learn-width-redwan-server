@@ -11,12 +11,23 @@ import httpStatus from 'http-status';
 import ApiError from '../../../errors/api.error';
 import { generateCourseId } from './course.utils';
 import { courseSearchableFields } from './course.constants';
+import { uploadToS3 } from '../../../shared/s3/s3';
 
-const createCourse = async (props: ICourse): Promise<ICourse> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createCourse = async (props: ICourse, file: any): Promise<ICourse> => {
   // auto generated incremental id
   const courseId = await generateCourseId();
 
+  const imageUrl = await uploadToS3({
+    file,
+    fileName: `images/courses/${courseId}`,
+  });
+
   props.id = courseId;
+  props.thumbnail = imageUrl as string;
+  props.regularPrice = parseInt(props.regularPrice);
+  props.regularPrice = parseInt(props.regularPrice);
+
   const course = await Course.create(props);
 
   if (!course) {

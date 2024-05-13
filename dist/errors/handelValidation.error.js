@@ -2,7 +2,6 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 const HandleValidationError = err => {
   const errors = Object.values(err.errors).map(el => {
-    console.log(`${el.path}`.red);
     return {
       path: el === null || el === void 0 ? void 0 : el.path,
       message: el === null || el === void 0 ? void 0 : el.message,
