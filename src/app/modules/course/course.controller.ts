@@ -9,8 +9,10 @@ import { paginationFields } from '../../../constants/pagination';
 import { ICourse } from './course.interface';
 
 const createCourse = CatchAsync(async (req: Request, res: Response) => {
-  const course = req?.body;
-  const result = await CourseService.createCourse(course);
+  const { file } = req;
+  const course = { ...req?.body };
+  const result = await CourseService.createCourse(course, file);
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

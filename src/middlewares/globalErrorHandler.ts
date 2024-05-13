@@ -14,11 +14,8 @@ const ErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   let message = 'Something went wrong';
   let errorMessages: IGenericErrorMessage[] = [];
 
-  // console.log(error)
-
   if (error.name)
     if (error.name === 'ValidationError') {
-      console.log(1);
       const simplifiedError = HandleValidationError(error);
       statusCode = simplifiedError?.statusCode;
       message = simplifiedError?.message || 'Validation Error';

@@ -21,10 +21,8 @@ const ErrorHandler = (error, req, res, next) => {
   let statusCode = 500;
   let message = 'Something went wrong';
   let errorMessages = [];
-  // console.log(error)
   if (error.name)
     if (error.name === 'ValidationError') {
-      console.log(1);
       const simplifiedError = (0, handelValidation_error_1.default)(error);
       statusCode =
         simplifiedError === null || simplifiedError === void 0

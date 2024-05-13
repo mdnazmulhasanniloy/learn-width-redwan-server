@@ -8,7 +8,6 @@ const HandleValidationError = (
 ): IGenericErrorResponse => {
   const errors: IGenericErrorMessage[] = Object.values(err.errors).map(
     (el: mongoose.Error.ValidatorError | mongoose.Error.CastError) => {
-      console.log(`${el.path}`.red);
       return {
         path: el?.path,
         message: el?.message,
