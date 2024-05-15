@@ -11,7 +11,7 @@ import httpStatus from 'http-status';
 import ApiError from '../../../errors/api.error';
 import { generateCourseId } from './course.utils';
 import { courseSearchableFields } from './course.constants';
-import { uploadToS3 } from '../../../shared/s3/s3';
+import { deleteFromS3, uploadToS3 } from '../../../shared/s3/s3';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createCourse = async (props: ICourse, file: any): Promise<ICourse> => {
@@ -103,7 +103,25 @@ const getCourseById = async (id: string): Promise<ICourse> => {
 
 //update course
 
-const updateCourse = async (id: string, props: ICourse): Promise<ICourse> => {
+const updateCourse = async (
+  id: string,
+  props: ICourse,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  file: any,
+): Promise<ICourse> => {
+  const course = await Course.findById(id);
+  props.regularPrice = parseInt(props.regularPrice);
+  props.regularPrice = parseInt(props.regularPrice);
+
+  if (file) {
+    const imageUrl = await uploadToS3({
+      file,
+      fileName: `images/courses/${course?.id}`,
+    });
+
+    props.thumbnail = imageUrl as string;
+  }
+
   const result = await Course.findByIdAndUpdate(id, props, { new: true });
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'oops! course is not found.');
@@ -113,7 +131,9 @@ const updateCourse = async (id: string, props: ICourse): Promise<ICourse> => {
 
 //delete course
 
-const deleteCourse = async (id: string): Promise<ICourse> => {
+const deleteCourse = async (id: string): Promise<ICourse | null> => {
+  const course = await Course.findById(id);
+  await deleteFromS3(`images/courses/${course?.id}`);
   const result = await Course.findByIdAndDelete(id);
   if (!result) {
     throw new ApiError(
