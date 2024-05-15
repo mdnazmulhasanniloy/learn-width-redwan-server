@@ -16,6 +16,7 @@ router.post(
 );
 router.patch(
   '/:id',
+  upload.single('thumbnail'),
   validateRequest(courseValidation.updateCourseZodSchema),
   CourseController.updateCourse,
 );

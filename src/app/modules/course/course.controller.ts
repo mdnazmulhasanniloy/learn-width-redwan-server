@@ -52,8 +52,14 @@ const getCourseById = CatchAsync(async (req: Request, res: Response) => {
 //update course
 const updateCourse = CatchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
-  const updatedData = req?.body;
-  const result = await CourseService.updateCourse(id as string, updatedData);
+  const { file } = req;
+  const updatedData = { ...req?.body };
+
+  const result = await CourseService.updateCourse(
+    id as string,
+    updatedData,
+    file,
+  );
   sendResponse<ICourse>(res, {
     statusCode: httpStatus.OK,
     success: true,
