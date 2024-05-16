@@ -10,8 +10,10 @@ import { paginationFields } from '../../../constants/pagination';
 
 //create a lecture
 const createLecture = CatchAsync(async (req: Request, res: Response) => {
-  const lecture = req.body;
-  const result = await LectureService.createLecture(lecture);
+  const { file } = req;
+  const lecture = { ...req.body };
+
+  const result = await LectureService.createLecture(lecture, file);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -57,8 +59,9 @@ const getLectureById = CatchAsync(async (req: Request, res: Response) => {
 
 const updateLecture = CatchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
-  const lecture = req.body;
-  const result = await LectureService.updateLecture(id, lecture);
+  const { file } = req;
+  const lecture = { ...req.body };
+  const result = await LectureService.updateLecture(id, lecture, file);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

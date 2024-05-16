@@ -11,13 +11,24 @@ import {
 } from '../../../interface/common.interface';
 import { generateLectureId } from './lecture.utils';
 import { lectureSearchableFields } from './lecture.constants';
+import { deleteFromS3, uploadToS3 } from '../../../shared/s3/s3';
 
 //create lecture
-const createLecture = async (props: ILecture): Promise<ILecture | null> => {
-  // auto generated incremental id
-  const courseId = await generateLectureId();
+const createLecture = async (
+  props: ILecture,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  file: any,
+): Promise<ILecture | null> => {
+  const lectureId = await generateLectureId();
 
-  props.id = courseId;
+  const videoUrl = await uploadToS3({
+    file,
+    fileName: `videos/lecture/${lectureId}`,
+  });
+
+  props.id = lectureId;
+  props.video = videoUrl as string;
+
   const result = await Lecture.create(props);
 
   if (!result) {
@@ -102,7 +113,20 @@ const getLectureById = async (id: string): Promise<ILecture> => {
 const updateLecture = async (
   id: string,
   props: ILecture,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  file: any,
 ): Promise<ILecture | null> => {
+  const lecture = await Lecture.findById(id);
+
+  if (file) {
+    const imageUrl = await uploadToS3({
+      file,
+      fileName: `videos/lecture/${lecture?.id}`,
+    });
+
+    props.video = imageUrl as string;
+  }
+
   const result = await Lecture.findByIdAndUpdate(id, props, { new: true });
 
   if (!result) {
@@ -117,6 +141,8 @@ const updateLecture = async (
 //delete lecture
 
 const deleteLecture = async (id: string): Promise<ILecture | null> => {
+  const lecture = await Lecture.findById(id);
+  await deleteFromS3(`videos/lecture/${lecture?.id}`);
   const result = await Lecture.findByIdAndDelete(id);
 
   if (!result) {
