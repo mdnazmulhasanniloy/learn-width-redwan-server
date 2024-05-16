@@ -4,17 +4,8 @@ export type ILecture = {
   id: string;
   lectureName: string;
   topic: string;
-  notice: string;
-  lectureVideo: {
-    liveLink: string;
-    videoLink: {
-      s3Hoster: string;
-      vimeoHoster: string;
-    };
-  };
+  video: string;
   type: string;
-  startAt: string;
-  endsAt: string;
   isOptional: boolean;
 
   courseId: Types.ObjectId;
@@ -23,8 +14,3 @@ export type ILecture = {
 };
 
 export type ILectureModel = Model<ILecture, Record<string, unknown>>;
-//   assignment: {
-//     sheduledAt: data?.scheduledAt,
-//     deadLine: data?.endsAt,
-//     assignments: selectedAssignment,
-//   },

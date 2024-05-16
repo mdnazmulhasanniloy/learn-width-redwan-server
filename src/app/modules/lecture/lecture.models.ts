@@ -16,37 +16,22 @@ const lectureSchema = new Schema<ILecture>(
       type: String,
       required: true,
     },
-    notice: {
+    video: {
       type: String,
-    },
-    lectureVideo: {
-      liveLink: {
-        type: String,
-        required: true,
-      },
-      videoLink: {
-        s3Hoster: {
-          type: String,
-        },
-        vimeoHoster: {
-          type: String,
-        },
-      },
+      required: true,
     },
     type: {
       type: String,
       required: true,
     },
-    startAt: {
-      type: String,
-      required: true,
-    },
-    endsAt: {
-      type: String,
-      required: true,
-    },
     isOptional: {
       type: Boolean,
+      required: true,
+      default: true,
+    },
+    courseId: {
+      type: Schema.Types.ObjectId,
+      ref: 'course',
       required: true,
     },
     batchId: {
@@ -57,11 +42,6 @@ const lectureSchema = new Schema<ILecture>(
     moduleId: {
       type: Schema.Types.ObjectId,
       ref: 'Module',
-      required: true,
-    },
-    courseId: {
-      type: Schema.Types.ObjectId,
-      ref: 'course',
       required: true,
     },
   },
