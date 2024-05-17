@@ -3,6 +3,7 @@ export const ModuleFilterableFields = [
   'moduleName',
   'course',
   'batch',
+  'isActive',
   'searchTerm',
 ];
 

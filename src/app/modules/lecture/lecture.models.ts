@@ -24,7 +24,7 @@ const lectureSchema = new Schema<ILecture>(
       type: String,
       required: true,
     },
-    isOptional: {
+    isActive: {
       type: Boolean,
       required: true,
       default: true,

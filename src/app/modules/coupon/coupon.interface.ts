@@ -5,6 +5,7 @@ export type ICoupon = {
   couponCode: string;
   discount: number;
   expireAt: string;
+  isActive: boolean;
 };
 
 export type ICouponModel = Model<ICoupon, Record<string, unknown>>;

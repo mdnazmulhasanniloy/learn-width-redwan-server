@@ -6,7 +6,7 @@ export type ILecture = {
   topic: string;
   video: string;
   type: string;
-  isOptional: boolean;
+  isActive: boolean;
 
   courseId: Types.ObjectId;
   batchId: Types.ObjectId;

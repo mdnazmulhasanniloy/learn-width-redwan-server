@@ -5,6 +5,7 @@ export const lectureFilterableFields = [
   'module',
   'course',
   'lectureName',
+  'isActive',
   'searchTerm',
 ];
 

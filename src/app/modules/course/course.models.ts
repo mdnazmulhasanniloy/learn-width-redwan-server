@@ -11,10 +11,10 @@ const courseSchema = new Schema<ICourse>(
     name: {
       type: String,
       required: true,
-      unique: true,
     },
     duration: {
       type: Number,
+      max: 12,
       required: true,
     },
     regularPrice: {
@@ -22,12 +22,17 @@ const courseSchema = new Schema<ICourse>(
       required: true,
     },
     currentBatch: {
-      type: String,
+      type: Number,
       required: true,
     },
     thumbnail: {
       type: String,
       required: true,
+    },
+    isActive: {
+      type: Boolean,
+      required: true,
+      default: true,
     },
   },
   {

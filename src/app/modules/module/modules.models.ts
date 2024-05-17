@@ -18,6 +18,11 @@ const modulesSchema = new Schema<IModules>(
       ref: 'course',
     },
     batch: { type: Schema.Types.ObjectId, required: true, ref: 'Batch' },
+    isActive: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
   {
     timestamps: true,

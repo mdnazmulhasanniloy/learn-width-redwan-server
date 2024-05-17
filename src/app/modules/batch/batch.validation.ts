@@ -11,6 +11,7 @@ const createBatchZodSchema = z.object({
     courseId: z.string({ required_error: 'courseId is required' }),
     thumbnail: z.string().optional(),
     description: z.string().optional(),
+    isActive: z.boolean({ required_error: 'isActive is required' }),
   }),
 });
 
@@ -26,6 +27,7 @@ const updateBatchZodSchema = z.object({
     courseId: z.string({ required_error: 'courseId is required' }).optional(),
     thumbnail: z.string().optional(),
     description: z.string().optional(),
+    isActive: z.boolean({ required_error: 'isActive is required' }).optional(),
   }),
 });
 

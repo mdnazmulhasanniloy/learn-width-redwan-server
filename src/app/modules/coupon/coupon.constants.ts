@@ -3,6 +3,7 @@ export const couponSearchableFields = [
   'expireAt',
   'couponCode',
   'couponLabel',
+  'isActive',
 ];
 
 export const couponFilterableFields = [
@@ -10,5 +11,6 @@ export const couponFilterableFields = [
   'expireAt',
   'couponCode',
   'couponLabel',
+  'isActive',
   'searchTerm',
 ];

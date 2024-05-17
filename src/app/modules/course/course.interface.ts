@@ -5,7 +5,8 @@ export type ICourse = {
   name: string;
   duration: number;
   regularPrice: number;
-  currentBatch: string;
+  isActive: boolean;
+  currentBatch: number;
   thumbnail: string;
 };
 

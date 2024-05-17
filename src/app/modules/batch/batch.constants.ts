@@ -5,6 +5,13 @@ export const batchFilterableFields = [
   'startedAt',
   'courseId',
   'searchTerm',
+  'isActive',
 ];
 
-export const batchSearchableFields = ['id', 'name', 'courseId', 'startAt'];
+export const batchSearchableFields = [
+  'id',
+  'name',
+  'courseId',
+  'startAt',
+  'isActive',
+];
