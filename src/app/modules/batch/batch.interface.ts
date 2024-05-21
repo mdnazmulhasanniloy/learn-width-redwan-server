@@ -9,6 +9,7 @@ export type IBatch = {
   duration: number;
   startedAt: string;
   courseId: Types.ObjectId | ICourse;
+  isActive: boolean;
 };
 
 export type BatchModel = Model<IBatch, Record<string, unknown>>;

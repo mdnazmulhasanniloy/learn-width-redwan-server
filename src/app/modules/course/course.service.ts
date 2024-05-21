@@ -25,8 +25,6 @@ const createCourse = async (props: ICourse, file: any): Promise<ICourse> => {
 
   props.id = courseId;
   props.thumbnail = imageUrl as string;
-  props.regularPrice = parseInt(props.regularPrice);
-  props.regularPrice = parseInt(props.regularPrice);
 
   const course = await Course.create(props);
 
@@ -110,8 +108,6 @@ const updateCourse = async (
   file: any,
 ): Promise<ICourse> => {
   const course = await Course.findById(id);
-  props.regularPrice = parseInt(props.regularPrice);
-  props.regularPrice = parseInt(props.regularPrice);
 
   if (file) {
     const imageUrl = await uploadToS3({

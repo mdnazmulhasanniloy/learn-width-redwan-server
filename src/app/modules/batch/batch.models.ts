@@ -23,6 +23,11 @@ const batchSchema = new Schema<IBatch>(
       type: Number,
       required: [true, 'duration is required'],
     },
+    isActive: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     startedAt: {
       type: String,
       required: [true, 'startedAt is required'],

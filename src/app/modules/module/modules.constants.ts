@@ -3,7 +3,8 @@ export const ModuleFilterableFields = [
   'moduleName',
   'course',
   'batch',
+  'isActive',
   'searchTerm',
 ];
 
-export const moduleSearchableFields = ['id', 'moduleName', 'course', 'batch'];
+export const moduleSearchableFields = ['id', 'moduleName'];

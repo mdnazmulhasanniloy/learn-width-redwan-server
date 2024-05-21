@@ -4,7 +4,8 @@ export const courseFilterableFields = [
   'duration',
   'regularPrice',
   'currentBatch',
+  'isActive',
   'searchTerm',
 ];
 
-export const courseSearchableFields = ['id', 'name', 'currentBatch'];
+export const courseSearchableFields = ['id', 'name'];
