@@ -7,6 +7,9 @@ const createCourseZodSchema = z.object({
       .number({ required_error: 'duration is required' })
       .max(12)
       .min(1),
+    description: z
+      .string({ required_error: 'description is required' })
+      .optional(),
     regularPrice: z.number({ required_error: 'regular price is required' }),
     currentBatch: z.number({ required_error: 'current batch is required' }),
     thumbnail: z.any(),
@@ -25,6 +28,9 @@ const updateCourseZodSchema = z.object({
       .optional(),
     currentBatch: z
       .number({ required_error: 'current batch is required' })
+      .optional(),
+    description: z
+      .string({ required_error: 'description is required' })
       .optional(),
     thumbnail: z.any().optional(),
   }),

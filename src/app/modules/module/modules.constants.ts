@@ -7,4 +7,4 @@ export const ModuleFilterableFields = [
   'searchTerm',
 ];
 
-export const moduleSearchableFields = ['id', 'moduleName', 'course', 'batch'];
+export const moduleSearchableFields = ['id', 'moduleName'];

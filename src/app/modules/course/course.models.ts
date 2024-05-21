@@ -29,6 +29,9 @@ const courseSchema = new Schema<ICourse>(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+    },
     isActive: {
       type: Boolean,
       required: true,

@@ -1,18 +1,12 @@
 export const lectureFilterableFields = [
   'id',
   'type',
-  'batch',
-  'module',
-  'course',
+  'batchId',
+  'courseId',
+  'courseId',
   'lectureName',
   'isActive',
   'searchTerm',
 ];
 
-export const lectureSearchableFields = [
-  'id',
-  'LectureName',
-  'id',
-  'type',
-  'batch',
-];
+export const lectureSearchableFields = ['id', 'lectureName', 'topic', 'type'];

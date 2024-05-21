@@ -45,15 +45,15 @@ const getAllModules = async (
     });
   }
 
-  if (Object.entries(filtersData).length) {
-    andCondition.push({
-      $and: Object.entries(filtersData)?.map(([field, value]) => ({
-        [field]: [value],
+  if (Object.entries(filtersData)?.length) {
+    andCondition?.push({
+      $and: Object?.entries(filtersData)?.map(([field, value]) => ({
+        [field]: value,
       })),
     });
   }
 
-  //sorting and pagination
+  // Sorting and pagination
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelper.calculatePagination(paginationOptions);
 
@@ -64,23 +64,78 @@ const getAllModules = async (
   }
 
   const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
-  //find collection
+  // Find collection
   const result = await Module.find(whereCondition)
     .populate(['course', 'batch'])
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
 
-  if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'oops! modules is not found.');
+  if (!result || result.length === 0) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Oops! Modules not found.');
   }
 
-  const total = await Module.countDocuments();
+  const total = await Module.countDocuments(whereCondition);
   return {
-    meta: { page: page, limit: limit, total: total },
+    meta: { page, limit, total },
     data: result,
   };
 };
+
+// const getAllModules = async (
+//   filters: IFilter,
+//   paginationOptions: IPaginationOption,
+// ): Promise<IGenericResponse<IModules[]>> => {
+//   const { searchTerm, ...filtersData } = filters;
+
+//   const andCondition = [];
+//   if (searchTerm) {
+//     andCondition.push({
+//       $or: moduleSearchableFields.map(field => ({
+//         [field]: {
+//           $regex: searchTerm,
+//           $options: 'i',
+//         },
+//       })),
+//     });
+//   }
+
+//   if (Object.entries(filtersData).length) {
+//     andCondition.push({
+//       $and: Object.entries(filtersData)?.map(([field, value]) => ({
+//         [field]: [value],
+//       })),
+//     });
+//   }
+
+//   //sorting and pagination
+//   const { page, limit, skip, sortBy, sortOrder } =
+//     paginationHelper.calculatePagination(paginationOptions);
+
+//   const sortConditions: { [key: string]: SortOrder } = {};
+
+//   if (sortBy && sortOrder) {
+//     sortConditions[sortBy] = sortOrder;
+//   }
+
+//   const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
+//   //find collection
+//   const result = await Module.find(whereCondition)
+//     .populate(['course', 'batch'])
+//     .sort(sortConditions)
+//     .skip(skip)
+//     .limit(limit);
+
+//   if (!result) {
+//     throw new ApiError(httpStatus.NOT_FOUND, 'oops! modules is not found.');
+//   }
+
+//   const total = await Module.countDocuments();
+//   return {
+//     meta: { page: page, limit: limit, total: total },
+//     data: result,
+//   };
+// };
 
 //get a batch by id
 const getModuleById = async (id: string): Promise<IModules | null> => {

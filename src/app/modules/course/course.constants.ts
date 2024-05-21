@@ -8,4 +8,4 @@ export const courseFilterableFields = [
   'searchTerm',
 ];
 
-export const courseSearchableFields = ['id', 'name', 'currentBatch'];
+export const courseSearchableFields = ['id', 'name'];

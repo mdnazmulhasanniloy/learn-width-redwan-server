@@ -8,6 +8,7 @@ export type ICourse = {
   isActive: boolean;
   currentBatch: number;
   thumbnail: string;
+  description: string;
 };
 
 export type CourseModel = Model<ICourse, Record<string, unknown>>;
