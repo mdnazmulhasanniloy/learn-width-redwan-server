@@ -21,7 +21,7 @@ function createFolderAndFiles(parentFolderPath, folderName) {
 
   files.forEach(file => {
     const filePath = path.join(folderPath, file);
-    fs.writeFileSync(filePath, '', 'utf8');
+    fs.writeFileSync(filePath, 'utf8');
   });
 
   console.log(`Folder "${folderName}" and files created successfully.`);

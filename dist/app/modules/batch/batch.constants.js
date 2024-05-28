@@ -1,12 +1,13 @@
-'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.batchSearchableFields = exports.batchFilterableFields = void 0;
 exports.batchFilterableFields = [
-  'id',
-  'name',
-  'duration',
-  'startedAt',
-  'courseId',
-  'searchTerm',
+    'id',
+    'name',
+    'duration',
+    'startedAt',
+    'courseId',
+    'searchTerm',
+    'isActive',
 ];
-exports.batchSearchableFields = ['id', 'name', 'courseId', 'startAt'];
+exports.batchSearchableFields = ['id', 'name', 'startAt'];

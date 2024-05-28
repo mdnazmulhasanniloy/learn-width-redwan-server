@@ -7,6 +7,9 @@ export const signUpZodSchema = z.object({
     email: z.string({ required_error: 'email is required' }).email(),
     password: z.string({ required_error: 'password is required' }),
     role: z.enum([...userRole] as [string, ...string[]]).default('student'),
+    isVerified: z
+      .boolean({ required_error: 'is verified is required' })
+      .default(false),
   }),
 });
 
@@ -14,9 +17,6 @@ const signInZodSchema = z.object({
   body: z.object({
     email: z.string({ required_error: 'email is required' }).email(),
     password: z.string({ required_error: 'password is required' }),
-    deviceIdentifier: z.string({
-      required_error: 'device identity is required',
-    }),
   }),
 });
 
