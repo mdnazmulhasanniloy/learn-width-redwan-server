@@ -9,18 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const validateRequest = (schema) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield schema.parseAsync({
-            body: req === null || req === void 0 ? void 0 : req.body,
-            query: req === null || req === void 0 ? void 0 : req.query,
-            params: req === null || req === void 0 ? void 0 : req.params,
-            cookies: req === null || req === void 0 ? void 0 : req.cookies,
-        });
-        return next();
-    }
-    catch (error) {
-        next(error);
-    }
+exports.parseFormDataTypes = void 0;
+const parseFormDataTypes = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    Object.entries(req.body).forEach(([key, value]) => {
+        if (value === 'true' || value === 'false') {
+            req.body[key] = Boolean(value);
+        }
+        else if (!isNaN(value)) {
+            req.body[key] = Number(value);
+        }
+    });
+    next();
 });
-exports.default = validateRequest;
+exports.parseFormDataTypes = parseFormDataTypes;

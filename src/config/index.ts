@@ -23,4 +23,6 @@ export default {
   access_token: process.env.ACCESS_TOKEN,
   ssl,
   aws,
+  secret_key1: process.env.SECRET_KEY1,
+  secret_key2: process.env.SECRET_KEY2,
 };

@@ -12,7 +12,7 @@ import { userFilterableFields } from './user.constants';
 const createUser = CatchAsync(async (req: Request, res: Response) => {
   const user = req?.body;
   const result = await UserService.createUser(user);
-
+  console.log(result);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -34,6 +34,18 @@ const getAllUsers = CatchAsync(async (req: Request, res: Response) => {
     message: 'users get successfully!',
     meta: result?.meta,
     data: result?.data,
+  });
+});
+
+//get user by email
+const getUserByEmail = CatchAsync(async (req: Request, res: Response) => {
+  const email = req.params.email;
+  const result = await UserService.getUserByEmail(email);
+  sendResponse<IUser>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'user get successfully!',
+    data: result,
   });
 });
 
@@ -80,6 +92,7 @@ const deleteUser = CatchAsync(async (req: Request, res: Response) => {
 export const UserController = {
   createUser,
   getAllUsers,
+  getUserByEmail,
   updateUser,
   blockUser,
   deleteUser,

@@ -3,6 +3,8 @@ import cors from 'cors';
 import ErrorHandler from './middlewares/globalErrorHandler';
 import routes from './app/routs';
 import httpStatus from 'http-status';
+import cookieSession from 'cookie-session';
+import config from './config';
 
 const app: Application = express();
 
@@ -14,6 +16,14 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: [config?.secret_key1 as string, config?.secret_key2 as string],
+    maxAge: 24 * 60 * 60 * 3000,
+  }),
+);
 
 app.use('/api/v1/', routes);
 

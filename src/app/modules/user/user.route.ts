@@ -17,5 +17,6 @@ router.patch(
 );
 router.delete('/:id', UserController.deleteUser);
 router.patch('/block-user/:id', UserController.blockUser);
+router.get('/:email', UserController.getUserByEmail);
 router.get('/', UserController.getAllUsers);
 export const UserRoutes = router;

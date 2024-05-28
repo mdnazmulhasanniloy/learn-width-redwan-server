@@ -83,6 +83,17 @@ const getAllUsers = async (
   };
 };
 
+//get user by email
+const getUserByEmail = async (email: string): Promise<IUser> => {
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'oops! user not found.');
+  }
+
+  return user;
+};
+
 //update user
 const updateUser = async (
   id: string,
@@ -129,6 +140,7 @@ const deleteUser = async (id: string): Promise<IUser | null> => {
 export const UserService = {
   createUser,
   getAllUsers,
+  getUserByEmail,
   updateUser,
   blockUser,
   deleteUser,

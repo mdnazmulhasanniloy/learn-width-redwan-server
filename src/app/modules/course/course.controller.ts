@@ -25,7 +25,7 @@ const createCourse = CatchAsync(async (req: Request, res: Response) => {
 const getAllCourses = CatchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, courseFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
-
+  // console.log(req.headers);
   const result = await CourseService.getAllCourses(filters, paginationOptions);
 
   sendResponse<ICourse[]>(res, {

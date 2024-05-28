@@ -134,7 +134,7 @@ const userSchema = new Schema<IUser>(
         },
       },
     },
-    isValid: {
+    isVerified: {
       type: Boolean,
       default: false,
       required: true,

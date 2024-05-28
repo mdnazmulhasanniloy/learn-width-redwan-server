@@ -28,7 +28,7 @@ export type IUser = {
   name: string;
   email: string;
   password: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   role: string;
   gender?: string;
   presentAddress?: Address;
@@ -36,8 +36,8 @@ export type IUser = {
   education?: Education;
   skills?: string;
   experience?: Experience;
-  isValid: boolean;
-  loggedInDevice: string | null;
+  isVerified: boolean;
+  loggedInDevice?: string | null;
   photoUrl?: string;
   _id?: string;
   accessToken?: string;

@@ -37,3 +37,14 @@ export type IFilter = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
+
+declare module 'express' {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface Request {
+    session?: {
+      userId?: string | null;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      [key: string]: any;
+    } | null;
+  }
+}
