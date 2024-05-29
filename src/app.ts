@@ -3,8 +3,11 @@ import cors from 'cors';
 import ErrorHandler from './middlewares/globalErrorHandler';
 import routes from './app/routs';
 import httpStatus from 'http-status';
-import cookieSession from 'cookie-session';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import config from './config';
+import { enableCors } from './middlewares/enable-cors';
+import MongoStore from 'connect-mongo';
 
 const app: Application = express();
 
@@ -17,13 +20,26 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cookieParser());
 app.use(
-  cookieSession({
-    name: 'session',
-    keys: [config?.secret_key1 as string, config?.secret_key2 as string],
-    maxAge: 24 * 60 * 60 * 3000,
+  session({
+    secret: config?.secret_key1 as string,
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: config.mongo_uri, // Replace with your MongoDB connection string
+      collectionName: 'sessions',
+    }),
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      maxAge: 1000 * 60 * 60 * 24 * 15,
+    },
   }),
 );
+
+app.use(enableCors);
 
 app.use('/api/v1/', routes);
 

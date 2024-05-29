@@ -17,6 +17,6 @@ router.post(
 );
 
 // router.post('/login-user');
-router.get('/sign-out', AuthController.signOut);
+router.post('/sign-out', AuthController.signOut);
 
 export const AuthRoutes = router;
