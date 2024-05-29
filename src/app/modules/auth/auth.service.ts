@@ -67,7 +67,7 @@ const signIn = async (props: ILoginUser): Promise<IUser | null> => {
     { userId: user._id, email: user?.email },
     config?.access_token as string,
     {
-      expiresIn: '3d',
+      expiresIn: '15d',
     },
   );
 

@@ -38,12 +38,13 @@ const signIn = CatchAsync(async (req: Request, res: Response) => {
     throw new ApiError(400, 'user login failed');
   }
 
-  req.session = {
-    userId: result?._id,
-    accessToken: result?.accessToken,
-    deviceIdentifier: result?.loggedInDevice,
-  };
+  if (req.session) {
+    req.session.userId = result._id;
+    req.session.accessToken = result.accessToken;
+    req.session.deviceIdentifier = result.loggedInDevice;
+  }
 
+  // console.log(req.session);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -54,6 +55,7 @@ const signIn = CatchAsync(async (req: Request, res: Response) => {
 
 const signOut = CatchAsync(async (req: Request, res: Response) => {
   const userId = req.session?.userId;
+
   if (!userId) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'User not authenticated');
   }
@@ -63,7 +65,7 @@ const signOut = CatchAsync(async (req: Request, res: Response) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Sign out failed');
   }
 
-  req.session = null;
+  res.clearCookie('connect.sid');
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import ApiError from '../../errors/api.error';

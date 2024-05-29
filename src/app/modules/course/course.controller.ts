@@ -7,10 +7,18 @@ import pick from '../../../shared/pick';
 import { courseFilterableFields } from './course.constants';
 import { paginationFields } from '../../../constants/pagination';
 import { ICourse } from './course.interface';
+import { User } from '../user/user.models';
+import ApiError from '../../../errors/api.error';
 
 const createCourse = CatchAsync(async (req: Request, res: Response) => {
   const { file } = req;
   const course = { ...req?.body };
+  const user = await User.findById(req.id);
+
+  if (user?.role !== 'admin') {
+    throw new ApiError(httpStatus.FORBIDDEN, 'access forbidden');
+  }
+
   const result = await CourseService.createCourse(course, file);
 
   sendResponse(res, {
@@ -54,6 +62,11 @@ const updateCourse = CatchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const { file } = req;
   const updatedData = { ...req?.body };
+  const user = await User.findById(req.id);
+
+  if (user?.role !== 'admin') {
+    throw new ApiError(httpStatus.FORBIDDEN, 'access forbidden');
+  }
 
   const result = await CourseService.updateCourse(
     id as string,
@@ -71,6 +84,12 @@ const updateCourse = CatchAsync(async (req: Request, res: Response) => {
 //delete course
 const deleteCourse = CatchAsync(async (req: Request, res: Response) => {
   const id = req?.params?.id;
+  const user = await User.findById(req.id);
+
+  if (user?.role !== 'admin') {
+    throw new ApiError(httpStatus.FORBIDDEN, 'access forbidden');
+  }
+
   const result = await CourseService.deleteCourse(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,

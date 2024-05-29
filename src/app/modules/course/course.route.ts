@@ -4,6 +4,7 @@ import { courseValidation } from './course.validation';
 import { CourseController } from './course.controller';
 import multer, { memoryStorage } from 'multer';
 import { parseFormDataTypes } from '../../middlewares/parseFormDataTypes';
+import { verifyToken } from '../../middlewares/verifyToken';
 
 const router = Router();
 const storage = memoryStorage();
@@ -13,6 +14,7 @@ router.post(
   '/create-course',
   upload.single('thumbnail'),
   parseFormDataTypes,
+  verifyToken,
   validateRequest(courseValidation.createCourseZodSchema),
   CourseController.createCourse,
 );
@@ -20,10 +22,11 @@ router.patch(
   '/:id',
   upload.single('thumbnail'),
   parseFormDataTypes,
+  verifyToken,
   validateRequest(courseValidation.updateCourseZodSchema),
   CourseController.updateCourse,
 );
-router.delete('/:id', CourseController.deleteCourse);
+router.delete('/:id', verifyToken, CourseController.deleteCourse);
 router.get('/:id', CourseController.getCourseById);
 router.get('/', CourseController.getAllCourses);
 
