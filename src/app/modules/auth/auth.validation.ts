@@ -16,7 +16,7 @@ export const signUpZodSchema = z.object({
 const signInZodSchema = z.object({
   body: z.object({
     email: z.string({ required_error: 'email is required' }).email(),
-    password: z.string({ required_error: 'password is required' }),
+    password: z.string({ required_error: 'password is required' }).optional(),
   }),
 });
 
