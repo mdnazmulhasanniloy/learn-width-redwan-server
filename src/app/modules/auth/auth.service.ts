@@ -36,7 +36,7 @@ const signIn = async (props: ILoginUser): Promise<IUser | null> => {
     );
   }
 
-  if (user.password) {
+  if (user?.password) {
     const isPasswordMatch: boolean = await bcrypt.compare(
       password,
       user.password,
