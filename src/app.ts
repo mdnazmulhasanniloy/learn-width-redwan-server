@@ -14,10 +14,7 @@ const app: Application = express();
 app.use(
   cors({
     credentials: true,
-    origin: [
-      'http://localhost:3000',
-      'https://learn-width-redwan-client.vercel.app',
-    ],
+    origin: 'https://learn-width-redwan-client.vercel.app',
   }),
 );
 
