@@ -27,7 +27,6 @@ const createCourse = async (props: ICourse, file: any): Promise<ICourse> => {
   props.thumbnail = imageUrl as string;
 
   const course = await Course.create(props);
-
   if (!course) {
     throw new ApiError(400, 'Oops! Course creation is Failed');
   }
