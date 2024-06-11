@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { UserRoutes } from '../modules/user/user.route';
-import { AuthRoutes } from '../modules/auth/auth.route';
 import { CourseRouter } from '../modules/course/course.route';
 import { BatchRouter } from '../modules/batch/batch.route';
 import { ModuleRouter } from '../modules/module/modules.route';
 import { LectureRouter } from '../modules/lecture/lecture.route';
 import { CouponRouter } from '../modules/coupon/coupon.route';
 import { PaymentRouter } from '../modules/payment/payment.route';
+import { authRoutes } from '../modules/auth/auth.route';
 
 const router = Router();
 
@@ -17,7 +17,7 @@ const modulesRoutes = [
   },
   {
     path: '/auth',
-    router: AuthRoutes,
+    router: authRoutes,
   },
   {
     path: '/course',
