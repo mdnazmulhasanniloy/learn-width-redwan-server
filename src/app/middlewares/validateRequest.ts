@@ -6,6 +6,8 @@ const validateRequest =
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       await schema.parseAsync({
+        file: req.file,
+        files: req.files,
         body: req?.body,
         query: req?.query,
         params: req?.params,
