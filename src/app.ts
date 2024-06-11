@@ -9,6 +9,7 @@ import config from './config';
 import MongoStore from 'connect-mongo';
 import dotenv from 'dotenv';
 import router from './app/routs';
+import { enableCors } from './middlewares/enable-cors';
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
+app.use(enableCors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
