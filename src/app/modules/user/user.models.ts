@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IUser, UserModel } from './user.interface';
+import { IUser, IUserModel } from './user.interface';
 import { gender } from './user.constants';
 import bcrypt from 'bcrypt';
 // import ApiError from '../../../errors/api.error';
@@ -172,4 +172,4 @@ userSchema.pre<IUser>('save', async function (next) {
   }
 });
 
-export const User = model<IUser, UserModel>('User', userSchema) as UserModel;
+export const User = model<IUser, IUserModel>('User', userSchema) as IUserModel;

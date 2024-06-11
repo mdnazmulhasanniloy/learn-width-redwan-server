@@ -69,7 +69,7 @@
 //   ],
 // });
 
-// if (config?.nod_env !== 'production') {
+// if (config?.node_env !== 'production') {
 //   logger.add(
 //     new transports.Console({
 //       format: combine(
