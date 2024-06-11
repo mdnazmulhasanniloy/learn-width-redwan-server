@@ -11,13 +11,20 @@ import router from './app/routs';
 
 const app: Application = express();
 
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: [
+//       'http://localhost:3000',
+//       'https://learn-width-redwan-client.vercel.app',
+//     ],
+//   }),
+// );
 app.use(
   cors({
+    origin: true,
     credentials: true,
-    origin: [
-      'http://localhost:3000',
-      'https://learn-width-redwan-client.vercel.app',
-    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   }),
 );
 

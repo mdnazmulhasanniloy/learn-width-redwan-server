@@ -3,7 +3,7 @@ import { LectureController } from './lecture.controller';
 import validateRequest from '../../middlewares/validateRequest';
 import { lectureValidator } from './lecture.validation';
 import multer, { memoryStorage } from 'multer';
-import { parseFormDataTypes } from '../../middlewares/parseFormDataTypes';
+import parseData from '../../middlewares/parse-data';
 
 const router = Router();
 const storage = memoryStorage();
@@ -12,14 +12,14 @@ const upload = multer({ storage });
 router.post(
   '/create-lecture',
   upload.single('video'),
-  parseFormDataTypes,
+  parseData,
   validateRequest(lectureValidator.createLectureZodSchema),
   LectureController.createLecture,
 );
 router.patch(
   '/:id',
   upload.single('video'),
-  parseFormDataTypes,
+  parseData,
   LectureController.updateLecture,
 );
 router.delete('/:id', LectureController.deleteLecture);
