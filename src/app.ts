@@ -10,18 +10,20 @@ import { enableCors } from './middlewares/enable-cors';
 import MongoStore from 'connect-mongo';
 
 const app: Application = express();
-
-app.use(
-  cors({
-    credentials: true,
-    origin: 'https://learn-width-redwan-client.vercel.app',
-  }),
-);
+app.use(express.static('public'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  }),
+);
+
 app.use(
   session({
     secret: config?.secret_key1 as string,
