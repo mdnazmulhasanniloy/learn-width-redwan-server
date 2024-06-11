@@ -12,14 +12,14 @@ const upload = multer({ storage });
 router.post(
   '/create-course',
   upload.single('thumbnail'),
-  parseData,
+  parseData(),
   validateRequest(courseValidation.createCourseZodSchema),
   CourseController.createCourse,
 );
 router.patch(
   '/:id',
   upload.single('thumbnail'),
-  parseData,
+  parseData(),
   validateRequest(courseValidation.updateCourseZodSchema),
   CourseController.updateCourse,
 );
