@@ -19,7 +19,7 @@ export default {
   port: process.env.PORT || 2000,
   mongo_uri: process.env.DB_URL || 'mongodb://localhost:27017/test',
   default_user_pass: process.env.DEFAULT_USER_FASS,
-  nod_env: process.env.NODE_ENV,
+  node_env: process.env.NODE_ENV,
   access_token: process.env.ACCESS_TOKEN,
   access_token_expires: process.env.ACCESS_TOKEN_EXPIRES,
   refers_token: process.env.REFERS_TOKEN,

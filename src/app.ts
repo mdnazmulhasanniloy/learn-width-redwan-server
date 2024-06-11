@@ -4,27 +4,20 @@ import ErrorHandler from './middlewares/globalErrorHandler';
 import httpStatus from 'http-status';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
+import config from './config';
 import { enableCors } from './middlewares/enable-cors';
 import MongoStore from 'connect-mongo';
-import config from './config';
 import router from './app/routs';
 
 const app: Application = express();
 
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: [
-//       'http://localhost:3000',
-//       'https://learn-width-redwan-client.vercel.app',
-//     ],
-//   }),
-// );
 app.use(
   cors({
-    origin: true,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    origin: [
+      'http://localhost:3000',
+      'https://learn-width-redwan-client.vercel.app',
+    ],
   }),
 );
 
@@ -43,7 +36,7 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: config.nod_env === 'production', // Use secure cookies in production
+      secure: config.node_env === 'production', // Use secure cookies in production
       sameSite: 'lax',
       maxAge: 1000 * 60 * 60 * 24 * 15,
     },
