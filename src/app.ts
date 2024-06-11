@@ -16,15 +16,22 @@ dotenv.config();
 const app: Application = express();
 
 // CORS configuration
-const corsOptions = {
-  credentials: true,
-  origin: [
-    config.origin.live_origin as string,
-    config.origin.local_origin as string,
-  ],
-};
-
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   credentials: true,
+//   origin: [
+//     config.origin.live_origin as string,
+//     config.origin.local_origin as string,
+//   ],
+// };
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  }),
+);
+//
+// app.use(cors(corsOptions));
 app.use(enableCors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
