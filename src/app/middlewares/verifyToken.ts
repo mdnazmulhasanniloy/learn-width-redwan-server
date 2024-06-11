@@ -1,29 +1,19 @@
-import jwt from 'jsonwebtoken';
-import { Response, NextFunction, Request } from 'express';
-import ApiError from '../../errors/api.error';
-import httpStatus from 'http-status';
-import config from '../../config';
+import { NextFunction, Request, Response } from 'express';
+import { AnyZodObject } from 'zod';
+import CatchAsync from '../../shared/catchAsync';
 
-export const verifyToken = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const token = req.session?.accessToken;
-    if (!token) {
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'access forbidden');
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    jwt.verify(token, config.access_token as string, (err, decoded: any) => {
-      if (err) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, 'invalid token');
-      }
-
-      req.id = decoded?.userId;
-      next();
+const validateRequest = (schema: AnyZodObject) => {
+  return CatchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    // console.log(req?.files?.backSide?.length);
+    await schema.parseAsync({
+      body: req.body,
+      files: req.files,
+      file: req.file,
+      cookies: req.cookies,
     });
-  } catch (error) {
-    next(error);
-  }
+
+    next();
+  });
 };
+
+export default validateRequest;

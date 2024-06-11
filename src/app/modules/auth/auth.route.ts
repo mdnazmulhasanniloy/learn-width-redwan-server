@@ -1,22 +1,50 @@
-import express from 'express';
+import { Router } from 'express';
+import { authControllers } from './auth.controller';
+import { authValidation } from './auth.validation';
 import validateRequest from '../../middlewares/validateRequest';
-import { AuthController } from './auth.controller';
-import { AuthValidation } from './auth.validation';
+// import auth from '../../middlewares/auth';
 
-const router = express.Router();
+const router = Router();
 
 router.post(
-  '/sign-up',
-  validateRequest(AuthValidation.signUpZodSchema),
-  AuthController.signUp,
+  '/login',
+  validateRequest(authValidation.loginZodValidationSchema),
+  authControllers.login,
 );
+
 router.post(
-  '/sign-in',
-  validateRequest(AuthValidation.signInZodSchema),
-  AuthController.signIn,
+  '/refresh-token',
+  validateRequest(authValidation.refreshTokenValidationSchema),
+  authControllers.refreshToken,
 );
+router.patch(
+  '/change-password',
+  // auth(USER_ROLE.sub_admin, USER_ROLE.super_admin),
+  authControllers.changePassword,
+);
+router.patch('/forgot-password', authControllers.forgotPassword);
+router.patch('/reset-password', authControllers.resetPassword);
+export const authRoutes = router;
 
-// router.post('/login-user');
-router.post('/sign-out', AuthController.signOut);
+// import express from 'express';
+// import validateRequest from '../../middlewares/validateRequest';
+// import { AuthController } from './auth.controller';
+// import { AuthValidation } from './auth.validation';
 
-export const AuthRoutes = router;
+// const router = express.Router();
+
+// router.post(
+//   '/sign-up',
+//   validateRequest(AuthValidation.signUpZodSchema),
+//   AuthController.signUp,
+// );
+// router.post(
+//   '/sign-in',
+//   validateRequest(AuthValidation.signInZodSchema),
+//   AuthController.signIn,
+// );
+
+// // router.post('/login-user');
+// router.post('/sign-out', AuthController.signOut);
+
+// export const AuthRoutes = router;

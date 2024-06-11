@@ -46,4 +46,13 @@ export type IUser = {
   _doc?: any;
 };
 
-export type UserModel = Model<IUser, Record<string, unknown>>;
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export interface IUserModel extends Model<IUser> {
+  isUserExist(email: string): Promise<IUser>;
+  IsUserExistById(id: string): Promise<IUser>;
+
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashedPassword: string,
+  ): Promise<boolean>;
+}
