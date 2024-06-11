@@ -12,14 +12,14 @@ const upload = multer({ storage });
 router.post(
   '/create-lecture',
   upload.single('video'),
-  parseData,
+  parseData(),
   validateRequest(lectureValidator.createLectureZodSchema),
   LectureController.createLecture,
 );
 router.patch(
   '/:id',
   upload.single('video'),
-  parseData,
+  parseData(),
   LectureController.updateLecture,
 );
 router.delete('/:id', LectureController.deleteLecture);
