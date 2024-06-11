@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { gender, userRole } from './user.constants';
+import { gender, role } from './user.constants';
 
 const AddressSchema = z.object({
   country: z.string({ required_error: 'country is required' }),
@@ -27,7 +27,7 @@ const ExperienceSchema = z.object({
 
 export const createUserZodSchema = z.object({
   body: z.object({
-    role: z.enum([...userRole] as [string, ...string[]]).default('student'),
+    role: z.enum([...role] as [string, ...string[]]).default('student'),
     name: z.string({ required_error: 'name is required' }),
     email: z.string({ required_error: 'email is required' }).email(),
     password: z.string({ required_error: 'password is required' }),
@@ -77,7 +77,7 @@ const updateExperienceSchema = z.object({
 export const updateUserZodSchema = z.object({
   body: z.object({
     role: z
-      .enum([...userRole] as [string, ...string[]])
+      .enum([...role] as [string, ...string[]])
       .default('student')
       .optional(),
     name: z.string({ required_error: 'name is required' }).optional(),
