@@ -1,37 +1,30 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import ErrorHandler from './middlewares/globalErrorHandler';
+import routes from './app/routs';
 import httpStatus from 'http-status';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
+import config from './config';
 import { enableCors } from './middlewares/enable-cors';
 import MongoStore from 'connect-mongo';
-import config from './config';
-import router from './app/routs';
 
 const app: Application = express();
 
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: [
-//       'http://localhost:3000',
-//       'https://learn-width-redwan-client.vercel.app',
-//     ],
-//   }),
-// );
 app.use(
   cors({
-    origin: true,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    origin: [
+      'http://localhost:3000',
+      'https://learn-width-redwan-client.vercel.app',
+    ],
   }),
 );
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
+app.use(cookieParser());
 app.use(
   session({
     secret: config?.secret_key1 as string,
@@ -43,7 +36,7 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: config.nod_env === 'production', // Use secure cookies in production
+      secure: false,
       sameSite: 'lax',
       maxAge: 1000 * 60 * 60 * 24 * 15,
     },
@@ -52,7 +45,7 @@ app.use(
 
 app.use(enableCors);
 
-app.use('/api/v1/', router);
+app.use('/api/v1/', routes);
 
 app.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -62,18 +55,20 @@ app.get('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-// Test IPN endpoint
+//test
 app.post('/ipn', async (req: Request, res: Response, next: NextFunction) => {
   try {
+    // const data = req.body;
     console.log('Received IPN notification:', req.body);
-    res.sendStatus(200); // Respond with 200 OK
+    res.status(200);
   } catch (error) {
     next(error);
   }
 });
 
-// Route not found
-app.use((req: Request, res: Response) => {
+// rout not found!
+
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
     status: httpStatus.NOT_FOUND,
     success: false,
@@ -81,13 +76,14 @@ app.use((req: Request, res: Response) => {
     errorMessages: [
       {
         path: req?.originalUrl,
-        message: `API not found!`,
+        message: `Api not found!`,
       },
     ],
   });
+  next();
 });
 
-// Error handling middleware
+//middlewares
 app.use(ErrorHandler);
 
 export default app;
