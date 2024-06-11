@@ -15,6 +15,11 @@ const aws = {
   bucket: process.env.AWS_BUCKET_NAME,
 };
 
+const origin = {
+  local_origin: process.env.LOCAL_ORIGIN,
+  live_origin: process.env.LIVE_ORIGIN,
+};
+
 export default {
   port: process.env.PORT || 2000,
   mongo_uri: process.env.DB_URL || 'mongodb://localhost:27017/test',
@@ -27,6 +32,7 @@ export default {
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
   ssl,
   aws,
+  origin,
   nodemailer_host_email: process.env.NODEMAILER_HOST_EMAIL,
   nodemailer_host_pass: process.env.NODEMAILER_HOST_PASS,
   secret_key1: process.env.SECRET_KEY1,

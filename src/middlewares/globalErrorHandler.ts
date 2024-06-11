@@ -52,7 +52,7 @@ const ErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
           ]
         : [];
     }
-  const stack = config?.nod_env === 'development' ? error.stack : null;
+  const stack = config?.node_env === 'development' ? error.stack : null;
   res.json({
     success: false,
     status: statusCode,

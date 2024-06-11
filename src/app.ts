@@ -1,28 +1,33 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import ErrorHandler from './middlewares/globalErrorHandler';
-import routes from './app/routs';
+
 import httpStatus from 'http-status';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import config from './config';
-import { enableCors } from './middlewares/enable-cors';
 import MongoStore from 'connect-mongo';
+import dotenv from 'dotenv';
+import router from './app/routs';
+
+dotenv.config();
 
 const app: Application = express();
-app.use(express.static('public'));
+
+// CORS configuration
+const corsOptions = {
+  credentials: true,
+  origin: [
+    config.origin.live_origin as string,
+    config.origin.local_origin as string,
+  ],
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  }),
-);
 
 app.use(
   session({
@@ -30,43 +35,45 @@ app.use(
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: config.mongo_uri, // Replace with your MongoDB connection string
+      mongoUrl: config.mongo_uri,
       collectionName: 'sessions',
     }),
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: config.node_env === 'production',
       sameSite: 'lax',
       maxAge: 1000 * 60 * 60 * 24 * 15,
     },
   }),
 );
 
-app.use(enableCors);
-
-app.use('/api/v1/', routes);
+// Define your routes after setting up CORS middleware
+app.use('/api/v1/', router);
 
 app.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.send(`simple server is running`);
+    res.send('simple server is running');
   } catch (error) {
     next(error);
   }
 });
 
-//test
+app.use((req, res, next) => {
+  console.log('Origin:'.blue, req.headers.origin);
+  next();
+});
+
+// Test route
 app.post('/ipn', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // const data = req.body;
     console.log('Received IPN notification:', req.body);
-    res.status(200);
+    res.sendStatus(200);
   } catch (error) {
     next(error);
   }
 });
 
-// rout not found!
-
+// Route not found handler
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
     status: httpStatus.NOT_FOUND,
@@ -75,14 +82,14 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     errorMessages: [
       {
         path: req?.originalUrl,
-        message: `Api not found!`,
+        message: 'API not found!',
       },
     ],
   });
   next();
 });
 
-//middlewares
+// Global error handler middleware
 app.use(ErrorHandler);
 
 export default app;

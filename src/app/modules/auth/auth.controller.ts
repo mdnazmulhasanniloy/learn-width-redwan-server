@@ -16,7 +16,7 @@ const login = CatchAsync(async (req: Request, res: Response) => {
     maxAge: 31536000000,
   };
 
-  if (config.nod_env === 'production') {
+  if (config.node_env === 'production') {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     cookieOptions.sameSite = 'none';

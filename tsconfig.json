@@ -1,7 +1,9 @@
 {
   "include": ["src"], // which files to compile
   "exclude": ["node_modules"], // which files to skip
+
   "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./src/interface"],
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */
