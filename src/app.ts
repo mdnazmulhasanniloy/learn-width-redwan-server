@@ -1,13 +1,13 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import ErrorHandler from './middlewares/globalErrorHandler';
-import routes from './app/routs';
 import httpStatus from 'http-status';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import config from './config';
 import { enableCors } from './middlewares/enable-cors';
 import MongoStore from 'connect-mongo';
+import config from './config';
+import router from './app/routs';
 
 const app: Application = express();
 
@@ -20,10 +20,11 @@ app.use(
     ],
   }),
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(cookieParser());
+
 app.use(
   session({
     secret: config?.secret_key1 as string,
@@ -35,7 +36,7 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: config.nod_env === 'production', // Use secure cookies in production
       sameSite: 'lax',
       maxAge: 1000 * 60 * 60 * 24 * 15,
     },
@@ -44,7 +45,7 @@ app.use(
 
 app.use(enableCors);
 
-app.use('/api/v1/', routes);
+app.use('/api/v1/', router);
 
 app.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -54,20 +55,18 @@ app.get('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-//test
+// Test IPN endpoint
 app.post('/ipn', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // const data = req.body;
     console.log('Received IPN notification:', req.body);
-    res.status(200);
+    res.sendStatus(200); // Respond with 200 OK
   } catch (error) {
     next(error);
   }
 });
 
-// rout not found!
-
-app.use((req: Request, res: Response, next: NextFunction) => {
+// Route not found
+app.use((req: Request, res: Response) => {
   res.status(httpStatus.NOT_FOUND).json({
     status: httpStatus.NOT_FOUND,
     success: false,
@@ -75,14 +74,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     errorMessages: [
       {
         path: req?.originalUrl,
-        message: `Api not found!`,
+        message: `API not found!`,
       },
     ],
   });
-  next();
 });
 
-//middlewares
+// Error handling middleware
 app.use(ErrorHandler);
 
 export default app;
