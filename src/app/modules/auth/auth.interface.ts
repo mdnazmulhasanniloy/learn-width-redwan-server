@@ -6,6 +6,7 @@ export type QueryObject = {
 export type Tlogin = {
   email: string;
   password: string;
+  deviceIdentifier: string;
 };
 export type TchangePassword = {
   oldPassword: string;

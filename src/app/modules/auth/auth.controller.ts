@@ -4,10 +4,22 @@ import httpStatus from 'http-status';
 import CatchAsync from '../../../shared/catchAsync';
 import config from '../../../config';
 import sendResponse from '../../../shared/sendResponse';
+import { generateRandomNumber } from './auth.utils';
+import catchAsync from '../../../shared/catchAsync';
+import ApiError from '../../../errors/api.error';
 
 //login
 const login = CatchAsync(async (req: Request, res: Response) => {
-  const result = await authServices.login(req.body);
+  // eslint-disable-next-line prefer-const, @typescript-eslint/no-explicit-any
+  let SignInData: any = await req.body;
+  // const deviceIdentifier = await req?.body?.deviceIdentifier;
+
+  if (!SignInData?.deviceIdentifier) {
+    const newDeviceIdentifier = generateRandomNumber();
+    SignInData.deviceIdentifier = newDeviceIdentifier;
+  }
+
+  const result = await authServices.login(SignInData);
   const { refreshToken } = result;
   const cookieOptions = {
     secure: false,
@@ -27,6 +39,48 @@ const login = CatchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Logged in successfully',
+    data: result,
+  });
+});
+
+//logout
+const signOut = CatchAsync(async (req: Request, res: Response) => {
+  const result = await authServices.signOut(req?.user?.userId);
+  req.session.destroy(err => {
+    throw new ApiError(httpStatus.BAD_GATEWAY, err.message);
+  });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Logged out successfully',
+    data: result,
+  });
+});
+
+//clear session
+const clearSession = catchAsync(async (req, res) => {
+  const sessionData = await req.body;
+  sessionData.deviceIdentifier = generateRandomNumber();
+  const result = await authServices.clearSession(sessionData);
+
+  const { refreshToken } = result;
+  const cookieOptions = {
+    secure: false,
+    httpOnly: true,
+    maxAge: 31536000000,
+  };
+
+  if (config.node_env === 'production') {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    cookieOptions.sameSite = 'none';
+  }
+  res.cookie('refreshToken', refreshToken, cookieOptions);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'session clear successfully',
     data: result,
   });
 });
@@ -81,6 +135,8 @@ const refreshToken = CatchAsync(async (req, res) => {
 
 export const authControllers = {
   login,
+  signOut,
+  clearSession,
   changePassword,
   forgotPassword,
   resetPassword,

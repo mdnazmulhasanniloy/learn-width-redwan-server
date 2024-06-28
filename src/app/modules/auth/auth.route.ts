@@ -7,10 +7,19 @@ import validateRequest from '../../middlewares/validateRequest';
 const router = Router();
 
 router.post(
-  '/login',
+  '/sign-up',
+  // validateRequest(authValidation.signUpZodSchema),
+  // authControllers.signUp,
+);
+
+router.post(
+  '/sign-in',
   validateRequest(authValidation.loginZodValidationSchema),
   authControllers.login,
 );
+router.post('/sign-out', authControllers.signOut);
+
+router.post('/clear-session', authControllers.clearSession);
 
 router.post(
   '/refresh-token',

@@ -66,7 +66,7 @@ app.get('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   console.log('Origin:'.blue, req.headers.origin);
   next();
 });

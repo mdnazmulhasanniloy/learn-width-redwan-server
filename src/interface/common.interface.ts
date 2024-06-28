@@ -38,18 +38,18 @@ export type IFilter = {
   [key: string]: any;
 };
 
-declare module 'express' {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-  interface Request {
-    id?: string;
-    session?: {
-      userId?: string | null;
-      accessToken?: string | null;
-      deviceIdentifier?: string | null;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      [key: string]: any;
-    } | null;
-  }
-}
+// declare module 'express' {
+//   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+//   interface Request {
+//     id?: string;
+//     session?: {
+//       userId?: string | null;
+//       accessToken?: string | null;
+//       deviceIdentifier?: string | null;
+//       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//       [key: string]: any;
+//     } | null;
+//   }
+// }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

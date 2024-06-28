@@ -20,7 +20,7 @@ const auth = (...userRoles: string[]) => {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'unauthorized');
     }
     const { role, userId } = decode;
-    const isUserExist = User.IsUserExistbyId(userId);
+    const isUserExist = User.IsUserExistById(userId);
     if (!isUserExist) {
       throw new ApiError(httpStatus.NOT_FOUND, 'user not found');
     }

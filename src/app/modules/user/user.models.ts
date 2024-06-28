@@ -151,6 +151,21 @@ const userSchema = new Schema<IUser>(
     photoUrl: {
       type: String,
     },
+    verification: {
+      otp: {
+        type: String,
+        select: 0,
+      },
+      expiresAt: {
+        type: Date,
+        select: 0,
+      },
+      status: {
+        type: Boolean,
+        default: false,
+        select: 0,
+      },
+    },
   },
   {
     timestamps: true,
@@ -171,5 +186,43 @@ userSchema.pre<IUser>('save', async function (next) {
     next();
   }
 });
+
+// set '' after saving password
+userSchema.post(
+  'save',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function (error: Error, doc: any, next: (error?: Error) => void): void {
+    doc.password = '';
+    next();
+  },
+);
+// filter out deleted documents
+userSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+userSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+userSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
+
+userSchema.statics.isUserExist = async function (email: string) {
+  return await User.findOne({ email: email }).select('+password');
+};
+userSchema.statics.IsUserExistbyId = async function (id: string) {
+  return await User.findById(id).select('+password');
+};
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashedPassword,
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
 
 export const User = model<IUser, IUserModel>('User', userSchema) as IUserModel;

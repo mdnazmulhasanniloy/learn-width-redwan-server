@@ -8,16 +8,17 @@ import pick from '../../../shared/pick';
 import { IUser } from './user.interface';
 import { paginationFields } from '../../../constants/pagination';
 import { userFilterableFields } from './user.constants';
+import { otpServices } from '../otp/otp.service';
 
 const createUser = CatchAsync(async (req: Request, res: Response) => {
   const user = req?.body;
   const result = await UserService.createUser(user);
-  console.log(result);
+  const OtpToken = await otpServices.resendOtp(result?.email as string);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'user created successfully!',
-    data: result,
+    data: OtpToken,
   });
 });
 

@@ -42,6 +42,11 @@ export type IUser = {
   _id?: string;
   accessToken?: string;
   userStatus: string;
+  verification: {
+    otp: number;
+    expiresAt: Date | string;
+    status: boolean;
+  };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _doc?: any;
 };

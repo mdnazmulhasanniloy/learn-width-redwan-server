@@ -7,6 +7,7 @@ import { LectureRouter } from '../modules/lecture/lecture.route';
 import { CouponRouter } from '../modules/coupon/coupon.route';
 import { PaymentRouter } from '../modules/payment/payment.route';
 import { authRoutes } from '../modules/auth/auth.route';
+import { otpRoutes } from '../modules/otp/otp.routes';
 
 const router = Router();
 
@@ -18,6 +19,10 @@ const modulesRoutes = [
   {
     path: '/auth',
     router: authRoutes,
+  },
+  {
+    path: '/otp',
+    router: otpRoutes,
   },
   {
     path: '/course',
