@@ -215,7 +215,7 @@ userSchema.pre('aggregate', function (next) {
 userSchema.statics.isUserExist = async function (email: string) {
   return await User.findOne({ email: email }).select('+password');
 };
-userSchema.statics.IsUserExistbyId = async function (id: string) {
+userSchema.statics.IsUserExistById = async function (id: string) {
   return await User.findById(id).select('+password');
 };
 userSchema.statics.isPasswordMatched = async function (
