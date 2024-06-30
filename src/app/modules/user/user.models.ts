@@ -108,6 +108,7 @@ const userSchema = new Schema<IUser>(
         },
       },
     },
+    //hello
     skills: { type: String },
     experience: {
       type: {
