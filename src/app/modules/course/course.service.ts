@@ -106,6 +106,7 @@ const updateCourse = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   file: any,
 ): Promise<ICourse> => {
+  console.log(id, props);
   const course = await Course.findById(id);
 
   if (file) {

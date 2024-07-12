@@ -31,7 +31,9 @@ export const createUserZodSchema = z.object({
     name: z.string({ required_error: 'name is required' }),
     email: z.string({ required_error: 'email is required' }).email(),
     password: z.string({ required_error: 'password is required' }),
-    phoneNumber: z.string({ required_error: 'phone number is required' }),
+    phoneNumber: z
+      .string({ required_error: 'phone number is required' })
+      .optional(),
     gender: z.enum([...gender] as [string, ...string[]]).optional(),
     presentAddress: AddressSchema.optional(),
     permanentAddress: AddressSchema.optional(),

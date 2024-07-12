@@ -59,9 +59,9 @@ const signOut = CatchAsync(async (req: Request, res: Response) => {
 
 //clear session
 const clearSession = catchAsync(async (req, res) => {
-  const sessionData = await req.body;
-  sessionData.deviceIdentifier = generateRandomNumber();
-  const result = await authServices.clearSession(sessionData);
+  const id = req?.user?.userId;
+  const deviceIdentifier = generateRandomNumber();
+  const result = await authServices.clearSession({ id, deviceIdentifier });
 
   const { refreshToken } = result;
   const cookieOptions = {

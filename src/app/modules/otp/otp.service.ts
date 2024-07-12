@@ -9,7 +9,6 @@ import { sendEmail } from '../../util/mailSender';
 import { generateRandomNumber } from '../auth/auth.utils';
 
 const verifyOtp = async (token: string, otp: string | number) => {
-  console.log(otp, 'otp');
   if (!token) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'you are not authorized!');
   }
@@ -73,7 +72,7 @@ const resendOtp = async (email: string) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'user not found');
   }
   const otp = generateOtp();
-  const expiresAt = moment().add(2, 'minute');
+  const expiresAt = moment().add(3, 'minute');
   const updateOtp = await User.findByIdAndUpdate(user?._id, {
     $set: {
       verification: {
@@ -94,7 +93,7 @@ const resendOtp = async (email: string) => {
     id: user?._id,
   };
   const token = jwt.sign(jwtPayload, config.access_token as Secret, {
-    expiresIn: '2m',
+    expiresIn: '3m',
   });
   await sendEmail(
     user?.email,

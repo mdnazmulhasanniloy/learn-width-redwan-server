@@ -13,6 +13,7 @@ const auth = (...userRoles: string[]) => {
       console.log('error from here', token);
       throw new ApiError(httpStatus.UNAUTHORIZED, 'you are not authorized!');
     }
+
     let decode;
     try {
       decode = jwt.verify(token, config.access_token as string) as JwtPayload;

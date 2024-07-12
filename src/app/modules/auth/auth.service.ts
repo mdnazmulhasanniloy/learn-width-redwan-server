@@ -31,10 +31,19 @@ const login = async (payload: Tlogin) => {
     user.loggedInDevice &&
     user.loggedInDevice !== payload?.deviceIdentifier
   ) {
-    throw new ApiError(
-      httpStatus.UNAUTHORIZED,
-      'User is already logged in from another device',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const jwtPayload: any = {
+      userId: user?._id,
+      role: user.role,
+    };
+
+    const accessToken = createToken(
+      jwtPayload,
+      config.access_token as string,
+      '2m',
     );
+
+    return { accessToken, clearSession: true };
   }
 
   const userId = user?._id;
@@ -92,14 +101,14 @@ const signOut = async (props: string): Promise<IUser | null> => {
 
 //clear session
 const clearSession = async (props: {
-  email: string;
-  deviceIdentifier: string;
+  id: string;
+  deviceIdentifier: number;
 }) => {
-  const user = await User.findOneAndUpdate(
-    { email: props?.email },
-    { loggedInDevice: props?.deviceIdentifier },
+  const user = await User.findByIdAndUpdate(
+    props.id,
+    { loggedInDevice: props.deviceIdentifier },
     { new: true, useFindAndModify: false },
-  );
+  ).select('-password');
 
   if (!user) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'session clarion failed');

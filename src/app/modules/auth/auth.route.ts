@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { authControllers } from './auth.controller';
 import { authValidation } from './auth.validation';
 import validateRequest from '../../middlewares/validateRequest';
+import auth from '../../middlewares/auth';
+import { USER_ROLE } from '../user/user.constants';
 // import auth from '../../middlewares/auth';
 
 const router = Router();
@@ -19,7 +21,16 @@ router.post(
 );
 router.post('/sign-out', authControllers.signOut);
 
-router.post('/clear-session', authControllers.clearSession);
+router.post(
+  '/clear-session',
+  auth(
+    USER_ROLE.student,
+    USER_ROLE.admin,
+    USER_ROLE.sub_admin,
+    USER_ROLE.super_admin,
+  ),
+  authControllers.clearSession,
+);
 
 router.post(
   '/refresh-token',

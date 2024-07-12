@@ -5,8 +5,7 @@ import sendResponse from '../../../shared/sendResponse';
 import catchAsync from '../../../shared/catchAsync';
 
 const verifyOtp = catchAsync(async (req: Request, res: Response) => {
-  const token = req?.headers?.token;
-
+  const token = req?.headers?.authorization?.split(' ')[1];
   const result = await otpServices.verifyOtp(token as string, req.body.otp);
   sendResponse(res, {
     statusCode: httpStatus.OK,
