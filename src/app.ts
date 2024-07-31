@@ -12,7 +12,6 @@ import router from './app/routs';
 import { enableCors } from './middlewares/enable-cors';
 
 dotenv.config();
-
 const app: Application = express();
 
 // CORS configuration
