@@ -12,7 +12,7 @@ router.post(
 );
 router.patch(
   '/:id',
-  validateRequest(moduleValidations.updateModuleZodSchema),
+  // validateRequest(moduleValidations.updateModuleZodSchema),
   ModuleController.updateModule,
 );
 router.delete('/:id', ModuleController.deleteModule);
